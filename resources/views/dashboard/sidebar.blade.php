@@ -175,7 +175,7 @@
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <ul class="nav">
         <li class="nav-item">
-          @if (Auth::user()->level === 'Administrator')
+          @if (Auth::user()->id_role === 1)
           <a class="nav-link" href="/admin/users">
           @else
           <a class="nav-link" href="/">
@@ -187,15 +187,77 @@
         @if (Auth::user()->id_role === 1)
         <li class="nav-item nav-category">Users</li>
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+          <a class="nav-link" data-bs-toggle="collapse" href="#izinUserSubMenu" aria-expanded="false" aria-controls="izinUserSubMenu">
             <i class="menu-icon mdi mdi-floor-plan"></i>
             <span class="menu-title">Izin User</span>
             <i class="menu-arrow"></i>
           </a>
-          <div class="collapse" id="ui-basic">
+          <div class="collapse" id="izinUserSubMenu">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="/admin/users/create">Tambah User</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item nav-category">Pengadaan Barang</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#pengadaanSubMenu" aria-expanded="false" aria-controls="pengadaanSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Pengadaan</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="pengadaanSubMenu">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item nav-category">Cash Advance</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Cash Advance</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="cashAdvanceSubMenu">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+            </ul>
+          </div>
+        </li>
+
+        @elseif (Auth::user()->id_role === 2)
+        <li class="nav-item nav-category">Pengadaan Barang</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Pengadaan</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item nav-category">Cash Advance</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Cash Advance</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="cashAdvanceSubMenu">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
             </ul>
           </div>
@@ -210,6 +272,53 @@
             <i class="menu-arrow"></i>
           </a>
           <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item nav-category">Cash Advance</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Cash Advance</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="cashAdvanceSubMenu">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+            </ul>
+          </div>
+        </li>
+
+        @elseif (Auth::user()->id_role === 4)
+        <li class="nav-item nav-category">Pengadaan Barang</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Pengadaan</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item nav-category">Cash Advance</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#cashAdvanceSubMenu" aria-expanded="false" aria-controls="cashAdvanceSubMenu">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Cash Advance</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="cashAdvanceSubMenu">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
@@ -260,3 +369,49 @@
         </li> --}}
       </ul>
     </nav>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      
+      const izinUserCategory = document.getElementById("izinUserCategory");
+      const pengadaanCategory = document.getElementById("pengadaanCategory");
+      const cashAdvanceCategory = document.getElementById("cashAdvanceCategory");
+    
+      
+      // const izinUserButton = document.getElementById("izinUserButton");
+      // const pengadaanButton = document.getElementById("pengadaanButton");
+      // const cashAdvanceCategory = document.getElementById("cashAdvanceCategory");
+    
+     
+      izinUserButton.addEventListener("click", function() {
+        
+        if (!pengadaanCategory.classList.contains("collapse")) {
+          pengadaanButton.click();
+        }
+        if (!cashAdvanceCategory.classList.contains("collapse")) {
+          cashAdvanceCategory.click();
+        }
+      });
+    
+      
+      pengadaanButton.addEventListener("click", function() {
+       
+        if (!izinUserCategory.classList.contains("collapse")) {
+          izinUserButton.click();
+        }
+        if (!cashAdvanceCategory.classList.contains("collapse")) {
+          cashAdvanceCategory.click();
+        }
+      });
+
+      cashAdvanceButton.addEventListener("click", function() {
+    
+    if (!izinUserCategory.classList.contains("collapse")) {
+      izinUserButton.click();
+    }
+    if (!pengadaanCategory.classList.contains("collapse")) {
+      pengadaanButton.click();
+    }
+  });
+    });
+  </script>
