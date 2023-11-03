@@ -44,7 +44,7 @@ class AuthController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
-            'id_role' => 3,
+            'id_role' => 2,
         ]);
         return redirect('login')->with('success', 'Buku berhasil ditambahkan.');
     }
@@ -98,14 +98,14 @@ class AuthController extends Controller
                     'name'              => $user_google->getName(),
                     'password'          => 0,
                     'email_verified_at' => now(),
-                    'id_role' => 3,
+                    'id_role' => 2,
                 ]);
 
 
                 auth()->login($create, true);
                 return redirect()->route('dashboard');
             }
-        } catch (Exception $e) {
+        } catch (\Illuminate\Database\QueryException $e) {
             return redirect()->route('login');
         }
     }

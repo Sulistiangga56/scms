@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PengadaanScmController;
 use App\Http\Controllers\TamuController;
 use App\Http\Controllers\TuanRumahController;
 use Illuminate\Support\Facades\Route;
@@ -16,12 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 // Route::get('/pengajuan-tamu', [TamuController::class, 'createForm'])->name('tamu.create');
-Route::post('/pengajuan-tamu', [TamuController::class, 'store'])->name('tamu.store');
-Route::get('/pengajuan-tamu/create', [TamuController::class, 'create'])->name('tamu.create');
 
 
 //auth
@@ -34,33 +35,42 @@ Route::post('/store', [AuthController::class, 'store'])->name('store');
 
 Route::middleware(['auth', 'role:1'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "administrator"
-
+    // Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 });
 Route::middleware(['auth', 'role:2'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "admin jkt"
-
+    // Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+    
 });
 Route::middleware(['auth', 'role:3'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "tuan"
-    Route::get('/tuanrumah', [TuanRumahController::class, 'index'])->name('tuanrumah.home');
-    Route::get('/persetujuan', [TuanRumahController::class, 'persetujuan'])->name('tuanrumah.persetujuan');
+    // Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+    Route::get('/pengadaan_scm', [PengadaanScmController::class, 'index'])->name('pengadaan_scm.index');
+    Route::get('/pengadaan_scm/create', [PengadaanScmController::class, 'create'])->name('pengadaan_scm.create');
+    Route::post('/pengadaan_scm', [PengadaanScmController::class, 'store'])->name('pengadaan_scm.store');
+    Route::get('/status_pengadaan_scm', [PengadaanScmController::class, 'status'])->name('pengadaan_scm.status');
+    Route::get('/status_pengadaan_scm/{id}', [PengadaanScmController::class, 'detail'])->name('pengadaan_scm.detail');
 });
 Route::middleware(['auth', 'role:4'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "phr"
-
+    // Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 });
 Route::middleware(['auth', 'role:5'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "admin_duri"
-
+    // Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 });
 Route::middleware(['auth', 'role:6'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "security"
-
+    // Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 });
 Route::middleware(['auth', 'role:7'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "admin pku"
-
+    // Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 });
+
+// Route::get('/unauthorized', function () {
+//     return 'Akses Ditolak!'; // Tampilkan pesan akses ditolak
+// })->name('unauthorized');
 
 
 // Rute untuk logout

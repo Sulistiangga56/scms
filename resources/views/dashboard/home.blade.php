@@ -19,9 +19,9 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col">
                                     <div class="fw-bold text-black">
-                                        Total  <br> Kunjungan
+                                        Banyak <br> Barang
                                     </div>
-                                    <div class="card-title" style="font-size: 24px">10</div>
+                                    <div class="card-title" style="font-size: 24px">{{$totalScm}}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="mdi mdi-archive" style="color: #097b96"></i>
@@ -40,8 +40,8 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col">
                                     <div class="fw-bold text-black">
-                                        Pengajuan <br> Kunjungan</div>
-                                    <div class="card-title" style="font-size: 24px">45</div>
+                                        Barang <br> Diajukan</div>
+                                    <div class="card-title" style="font-size: 24px">{{$scmDiajukan}}</div>
                                 </div>
                                 <div class="col-auto">
                                   <i class="mdi mdi-file-document" style="color: #097b96"></i>
@@ -54,14 +54,14 @@
 
                 <!-- Earnings (Monthly) Card Example -->
                 <div class="col">
-                  <a href="/pengadaan?status=disetujui_admin_general" class="text-decoration-none">
+                  <a href="/pengadaan?status=disetujui_pejabat_user" class="text-decoration-none">
                     <div class="card mb-2">
                       <div class="card-body d-flex align-self-center">
                           <div class="row no-gutters align-items-center">
                               <div class="col">
                                   <div class="fw-bold text-black">
-                                      Kunjungan disetujui</div>
-                                  <div class="card-title" style="font-size: 24px">50</div>
+                                      Disetujui Pejabat User</div>
+                                  <div class="card-title" style="font-size: 24px">{{$scmDisetujui2}}</div>
                               </div>
                               <div class="col-auto">
                                 <i class="mdi mdi-file-check" style="color: #097b96"></i>
@@ -74,14 +74,14 @@
 
                 <!-- Earnings (Monthly) Card Example -->
                 <div class="col">
-                  <a href="/pengadaan?status=disetujui_admin_general" class="text-decoration-none">
+                  <a href="/pengadaan?status=disetujui_pejabat_rendan" class="text-decoration-none">
                     <div class="card mb-2">
                       <div class="card-body d-flex align-self-center">
                           <div class="row no-gutters align-items-center">
                               <div class="col">
                                   <div class="fw-bold text-black">
-                                      kunjungan ditolak</div>
-                                  <div class="card-title" style="font-size: 24px">78</div>
+                                      Disetujui Pejabat Rendan</div>
+                                  <div class="card-title" style="font-size: 24px">{{$scmDisetujui1}}</div>
                               </div>
                               <div class="col-auto">
                                 <i class="mdi mdi-file-check" style="color: #097b96"></i>
@@ -92,36 +92,282 @@
                   </a>
                 </div>
 
-                <div class="container">
-                    <h1>Data Surat 1</h1>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Nama Tamu</th>
-                                <th>Asal Perusahaan</th>
-                                <th>Periode</th>
-
-                                <th>Status Surat</th>
-                                <th>Aksi</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($surat1 as $data)
-                                <tr>
-                                    <td>{{ $data->nama_tamu }}</td>
-                                    <td>{{ $data->asal_perusahaan }}</td>
-                                    <td>{{ $data->periode->tanggal_masuk->format('d-m-Y') }} - {{ $data->periode->tanggal_keluar->format('d-m-Y') }}</td>
-                                    <td>{{ $data->statusSurat->nama_status_surat }}</td>
-                                    <td><a href="#" class="btn btn-info">Lihat</a>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col">
+                  <a href="/pengadaan?status=disetujui_pejabat_lakdan" class="text-decoration-none">
+                    <div class="card mb-2">
+                      <div class="card-body d-flex align-self-center">
+                          <div class="row no-gutters align-items-center">
+                              <div class="col">
+                                  <div class="fw-bold text-black">
+                                      Disetujui Pejabat Lakdan</div>
+                                  <div class="card-title" style="font-size: 24px">{{$scmDisetujui}}</div>
+                              </div>
+                              <div class="col-auto">
+                                <i class="mdi mdi-file-check" style="color: #097b96"></i>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </a>
                 </div>
 
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col">
+                  <a href="/pengadaan?status=ditolak" class="text-decoration-none">
+                    <div class="card mb-2">
+                      <div class="card-body d-flex align-self-center">
+                        <div class="row no-gutters align-items-center">
+                          <div class="col">
+                            <div class="fw-bold text-black">
+                                Barang <br> Ditolak</div>
+                            <div class="card-title" style="font-size: 24px">{{$scmDitolak}}</div>
+                          </div>
+                          <div class="col-auto">
+                            <i class="mdi mdi-file-excel" style="color:#097b96"></i>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    {{-- <div class="col-lg-4 d-flex flex-column">
+                  </a>
+                </div>
+              </div>
+
+              <div class="tab-content tab-content-basic">
+                <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
+                  <div class="row">
+                    <div class="col-lg-8 d-flex flex-column">
+                      <div class="row flex-grow">
+                        <div class="col-12 grid-margin stretch-card">
+                          <div class="card card-rounded">
+                            <div class="card-body">
+                              <div class="d-sm-flex justify-content-between align-items-start">
+                                <div>
+                                  <h4 class="card-title card-title-dash">Barang diajukan</h4>
+                                 <p class="card-subtitle card-subtitle-dash">Ada {{$totalScm}} barang yang telah diajukan</p>
+                                </div>
+                                {{-- <div>
+                                  <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new member</button>
+                                </div> --}}
+                              </div>
+                              <div class="table-responsive  mt-1">
+                                <table class="table select-table">
+                                  <thead>
+                                    <tr>
+                                      <th>
+                                        <div class="form-check form-check-flat mt-0">
+                                          <label class="form-check-label">
+                                        </div>
+                                      </th>
+                                      <th>User</th>
+                                      <th>Nama Pengadaan</th>
+                                      <th>Harga</th>
+                                      <th>Tanggal</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                   @foreach ($pengadaanScmUser as $item)
+
+
+                                    <tr>
+                                      <td>
+                                        <div class="form-check form-check-flat mt-0">
+                                          <label class="form-check-label">
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <div class="d-flex ">
+                                          <img src="/dashboard/template/images/faces/face1.jpg" alt="">
+                                          <div>
+                                            <h6>{{ $item->nomor_pengadaan }}</h6>
+                                            <p>{{ $item->status }}</p>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td>
+                                        <h6>{{ $item->nama_barang }}</h6>
+                                      </td>
+                                      <td>
+                                        <div>
+                                            <h6>@currency($item->total)</h6>
+                                          </div>
+
+
+                                      </td>
+                                      <td><div class="badge badge-opacity-warning">{{ $item->tanggal_pengajuan }}</div></td>
+                                    </tr>
+                                    @endforeach
+                                  </tbody>
+                                </table>
+                                <ul class="pagination justify-content-start mt-4">
+                                  <!-- Tombol "Previous" -->
+                                  @if($pengadaanScmUser->previousPageUrl())
+                                  <li class="page-item">
+                                      <a class="page-link" href="{{ $pengadaanScmUser->previousPageUrl() }}" tabindex="-1" aria-disabled="true">Previous</a>
+                                  </li>
+                                  @else
+                                  <!-- Tombol "Previous" dinonaktif pada halaman terakhir -->
+                                  <li class="page-item disabled">
+                                    <span class="page-link">Previous</span>
+                                </li>
+                                  @endif
+
+                                  <!-- Halaman-halaman -->
+                                  @for($i = 1; $i <= $pengadaanScmUser->lastPage(); $i++)
+                                  <li class="page-item {{ ($pengadaanScmUser->currentPage() == $i) ? 'active' : '' }}">
+                                      <a class="page-link" href="{{ $pengadaanScmUser->url($i) }}">{{ $i }}</a>
+                                  </li>
+                                  @endfor
+
+                                  <!-- Tombol "Next" -->
+                                  @if($pengadaanScmUser->nextPageUrl())
+                                  <li class="page-item">
+                                      <a class="page-link" href="{{ $pengadaanScmUser->nextPageUrl() }}">Next</a>
+                                  </li>
+                                  @else
+                                  <!-- Tombol "Next" dinonaktif pada halaman terakhir -->
+                                  <li class="page-item disabled">
+                                      <span class="page-link">Next</span>
+                                  </li>
+                                  @endif
+                              </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {{-- <div class="row flex-grow">
+                        <div class="col-md-6 col-lg-6 grid-margin stretch-card">
+                          <div class="card card-rounded">
+                            <div class="card-body card-rounded">
+                              <h4 class="card-title  card-title-dash">Recent Events</h4>
+                              <div class="list align-items-center border-bottom py-2">
+                                <div class="wrapper w-100">
+                                  <p class="mb-2 font-weight-medium">
+                                    Change in Directors
+                                  </p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                      <i class="mdi mdi-calendar text-muted me-1"></i>
+                                      <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="list align-items-center border-bottom py-2">
+                                <div class="wrapper w-100">
+                                  <p class="mb-2 font-weight-medium">
+                                    Other Events
+                                  </p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                      <i class="mdi mdi-calendar text-muted me-1"></i>
+                                      <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="list align-items-center border-bottom py-2">
+                                <div class="wrapper w-100">
+                                  <p class="mb-2 font-weight-medium">
+                                    Quarterly Report
+                                  </p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                      <i class="mdi mdi-calendar text-muted me-1"></i>
+                                      <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="list align-items-center border-bottom py-2">
+                                <div class="wrapper w-100">
+                                  <p class="mb-2 font-weight-medium">
+                                    Change in Directors
+                                  </p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                      <i class="mdi mdi-calendar text-muted me-1"></i>
+                                      <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="list align-items-center pt-3">
+                                <div class="wrapper w-100">
+                                  <p class="mb-0">
+                                    <a href="#" class="fw-bold text-primary">Show all <i class="mdi mdi-arrow-right ms-2"></i></a>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 grid-margin stretch-card">
+                          <div class="card card-rounded">
+                            <div class="card-body">
+                              <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h4 class="card-title card-title-dash">Activities</h4>
+                                <p class="mb-0">20 finished, 5 remaining</p>
+                              </div>
+                              <ul class="bullet-line-list">
+                                <li>
+                                  <div class="d-flex justify-content-between">
+                                    <div><span class="text-light-green">Ben Tossell</span> assign you a task</div>
+                                    <p>Just now</p>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="d-flex justify-content-between">
+                                    <div><span class="text-light-green">Oliver Noah</span> assign you a task</div>
+                                    <p>1h</p>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="d-flex justify-content-between">
+                                    <div><span class="text-light-green">Jack William</span> assign you a task</div>
+                                    <p>1h</p>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="d-flex justify-content-between">
+                                    <div><span class="text-light-green">Leo Lucas</span> assign you a task</div>
+                                    <p>1h</p>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="d-flex justify-content-between">
+                                    <div><span class="text-light-green">Thomas Henry</span> assign you a task</div>
+                                    <p>1h</p>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="d-flex justify-content-between">
+                                    <div><span class="text-light-green">Ben Tossell</span> assign you a task</div>
+                                    <p>1h</p>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="d-flex justify-content-between">
+                                    <div><span class="text-light-green">Ben Tossell</span> assign you a task</div>
+                                    <p>1h</p>
+                                  </div>
+                                </li>
+                              </ul>
+                              <div class="list align-items-center pt-3">
+                                <div class="wrapper w-100">
+                                  <p class="mb-0">
+                                    <a href="#" class="fw-bold text-primary">Show all <i class="mdi mdi-arrow-right ms-2"></i></a>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div> --}}
+                    </div>
+                    <div class="col-lg-4 d-flex flex-column">
                       <div class="card card-rounded">
                         <div class="card-body">
                           <div class="row">
@@ -134,7 +380,7 @@
                             </div>
                           </div>
                         </div>
-                      </div> --}}
+                      </div>
                       {{-- <div class="row flex-grow">
                         <div class="col-12 grid-margin stretch-card">
                           <div class="card card-rounded">

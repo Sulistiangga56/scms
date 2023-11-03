@@ -202,17 +202,17 @@
         </li>
 
         @elseif (Auth::user()->id_role === 3)
-        <li class="nav-item nav-category">Persetujuan</li>
+        <li class="nav-item nav-category">Pengadaan Barang</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
             <i class="menu-icon mdi mdi-floor-plan"></i>
-            <span class="menu-title">Persetujuan</span>
+            <span class="menu-title">Pengadaan</span>
             <i class="menu-arrow"></i>
           </a>
           <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="/persetujuan">Persetujuann</a></li>
-              <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">Status</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
             </ul>
           </div>
