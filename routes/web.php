@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PengadaanScmController;
+use App\Http\Controllers\RabPengajuanController;
 use App\Http\Controllers\TamuController;
 use App\Http\Controllers\TuanRumahController;
 use Illuminate\Support\Facades\Route;
@@ -65,6 +67,21 @@ Route::middleware(['auth', 'role:1,2,3,4'])->group(function () {
     Route::post('/pengadaan_scm', [PengadaanScmController::class, 'store'])->name('pengadaan_scm.store');
     Route::get('/status_pengadaan_scm', [PengadaanScmController::class, 'status'])->name('pengadaan_scm.status');
     Route::get('/status_pengadaan_scm/{id}', [PengadaanScmController::class, 'detail'])->name('pengadaan_scm.detail');
+
+
+    Route::get('/pengadaan', [PengadaanController::class, 'index'])->name('pengadaan.index');
+    Route::get('/pengadaan/create', [PengadaanController::class, 'create'])->name('pengadaan.create');
+    Route::post('/pengadaan', [PengadaanController::class, 'store'])->name('pengadaan.store');
+    Route::get('/status_pengadaan', [PengadaanController::class, 'status'])->name('pengadaan.status');
+    Route::get('/status_pengadaan/{id}', [PengadaanController::class, 'detail'])->name('pengadaan.detail');
+
+    // Route::get('/rab_pengajuan', [RabPengajuanController::class, 'index'])->name('rab_pengajuan.index');
+    // Route::get('/rab_pengajuan/create', [RabPengajuanController::class, 'create'])->name('rab_pengajuan.create');
+    // Route::post('/rab_pengajuan/store', [RabPengajuanController::class, 'store'])->name('rab_pengajuan.store');
+    // Route::get('/rab_pengajuan/edit/{id}', [RabPengajuanController::class, 'edit'])->name('rab_pengajuan.edit');
+    // Route::post('/rab_pengajuan/update/{id}', [RabPengajuanController::class, 'update'])->name('rab_pengajuan.update');
+    // Route::get('/rab_pengajuan/delete/{id}', [RabPengajuanController::class, 'delete'])->name('rab_pengajuan.delete');
+    // Route::get('/rab_pengajuan/detail/{id}', [RabPengajuanController::class, 'detail'])->name('rab_pengajuan.detail');
 });
 Route::middleware(['auth', 'role:5'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat User"

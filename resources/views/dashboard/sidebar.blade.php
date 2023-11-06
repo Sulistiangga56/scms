@@ -210,6 +210,7 @@
           <div class="collapse" id="pengadaanSubMenu">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
+              <li class="nav-item"> <a class="nav-link" href="/rab">RAB</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
             </ul>
