@@ -14,6 +14,9 @@ class Pengadaan extends Model
         'No_Pengadaan',
         'Judul_Pengadaan',
         'Ringkasan_Pekerjaan',
+        'ID_Metode_Pengadaan',
+        'ID_Sistem_Evaluasi_Penawaran',
+        'ID_Jenis_Pengadaan'
     ];
 
     public function metodePengadaan()

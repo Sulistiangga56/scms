@@ -1,34 +1,5 @@
 @extends('dashboard.app')
 
-<style>
-    .popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
-.popup-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-}
-
-.close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    cursor: pointer;
-}
-</style>
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -39,29 +10,46 @@
     <div class="card-body">
         <form method="POST" action="{{ route('pengadaan.store') }}">
             @csrf
-            
-    <a href="#" class="btn btn-primary" id="tambahPekerjaanBtn">Tambah Pekerjaan</a>
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <span class="close" id="close-popup">&times;</span>
-            <h2>Form Pengisian Pekerjaan</h2>
-            <form id="popup-form" action="{{ route('pengadaan.store') }}" method="POST">
-                @csrf
-                <!-- Tambahkan input dan elemen lain sesuai kebutuhan -->
-                <input type="text" name="nama_pekerjaan" placeholder="Nama Pekerjaan" required>
-                <!-- Checklist Nota Dinas -->
-                <input type="checkbox" name="checklist_nota_dinas" id="checklist-nota-dinas">
-                <label for="checklist-nota-dinas">Nota Dinas</label>
-                <!-- Checklist Rencana Anggaran Biaya -->
-                <input type="checkbox" name="checklist_rab" id="checklist-rab">
-                <label for="checklist-rab">Rencana Anggaran Biaya</label>
-                <!-- Checklist Justifikasi Penunjukan Langsung -->
-                <input type="checkbox" name="checklist_justifikasi" id="checklist-justifikasi">
-                <label for="checklist-justifikasi">Justifikasi Penunjukan Langsung</label>
-                <button type="submit" class="btn btn-primary">Tambah Pekerjaan</button>
-            </form>
+
+    <button type="submit" class="btn btn-primary" id="tambahPekerjaanBtn">Tambah Pekerjaan</button>
+
+    <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formModalLabel">Form Pengisian Pekerjaan</h5>
+                    <button type="button" class="close" id="closeModalBtnForm" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" action="{{ route('pengadaan.store') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="Judul_Pengadaan">Nama Pekerjaan</label>
+                            <input type="text" class="form-control" id="Judul_Pengadaan" name="Judul_Pengadaan" placeholder="Nama Pekerjaan" required>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="checklist_nota_dinas" id="checklist-nota-dinas">
+                            <label class="form-check-label" for="checklist-nota-dinas">Nota Dinas</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="checklist_rab" id="checklist-rab">
+                            <label class="form-check-label" for="checklist-rab">Rencana Anggaran Biaya</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="checklist_justifikasi" id="checklist-justifikasi">
+                            <label class="form-check-label" for="checklist-justifikasi">Justifikasi Penunjukan Langsung</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit"  class="btn btn-primary" id="tambahBtn">Tambah</button>
+                </div>
+            </div>
         </div>
     </div>
+
     <table class="table">
         <thead>
             <tr>
@@ -75,27 +63,108 @@
             {{-- Tampilkan data pengadaan sesuai dengan kebutuhan Anda --}}
             @foreach($pengadaan as $pengadaan)
             <tr>
-                <td>{{ $pengadaan->nama_pekerjaan }}</td>
-                <td>{{ $pengadaan->status }}</td>
-                <td>{{ $pengadaan->operasi }}</td>
+                <td>{{ $pengadaan->Judul_Pengadaan }}</td>
                 <td>
-                    <a href="{{ route('pengadaan.detail', $pengadaan->id) }}" class="btn btn-info">Lihat Detail</a>
+                    @if($pengadaan->status == 'Belum Selesai')
+                        <span style="color: yellow;">&#9899;</span>
+                    @else
+                        <span style="color: green;">&#10003;</span>
+                    @endif
+                </td>
+                <td>{{ $pengadaan->operasi }}
+
+                    <button type="button" class="btn btn-warning edit-button" data-id="{{$pengadaan->ID_Pengadaan}}">
+                        <i class="fas fa-edit"></i>
+                    </button>
+
+                    <div class="modal fade" id="editModal{{$pengadaan->ID_Pengadaan}}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editModalLabel">Edit Pengadaan</h5>
+                                    <button type="button" class="close closeModalBtnEdit" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="edit-form-{{$pengadaan->ID_Pengadaan}}" action="{{ route('pengadaan.update', $pengadaan->ID_Pengadaan) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="form-group">
+                                            <label for="Judul_Pengadaan">Nama Pekerjaan</label>
+                                            <input type="text" class="form-control" name="Judul_Pengadaan" value="{{$pengadaan->Judul_Pengadaan}}">
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" name="checklist_nota_dinas" id="checklist-nota-dinas-{{$pengadaan->ID_Pengadaan}}">
+                                            <label class="form-check-label" for="checklist-nota-dinas-{{$pengadaan->ID_Pengadaan}}">Nota Dinas</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" name="checklist_rab" id="checklist-rab-{{$pengadaan->ID_Pengadaan}}">
+                                            <label class="form-check-label" for="checklist-rab-{{$pengadaan->ID_Pengadaan}}">Rencana Anggaran Biaya</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" name="checklist_justifikasi" id="checklist-justifikasi-{{$pengadaan->ID_Pengadaan}}">
+                                            <label class="form-check-label" for="checklist-justifikasi-{{$pengadaan->ID_Pengadaan}}">Justifikasi Penunjukan Langsung</label>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" form="edit-form-{{$pengadaan->ID_Pengadaan}}" class="btn btn-primary">Simpan Perubahan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="delete-form-{{ $pengadaan->ID_Pengadaan }}" action="{{ route('pengadaan.delete', $pengadaan->ID_Pengadaan) }}" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                    <a href="#" class="btn btn-danger" onclick="if (confirm('Apakah Anda yakin ingin menghapus data ini?')) { event.preventDefault(); document.getElementById('delete-form-{{ $pengadaan->ID_Pengadaan }}').submit(); }">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ route('pengadaan.detail', $pengadaan->ID_Pengadaan) }}" class="btn btn-info">Lihat Detail</a>
                 </td>
             </tr>
-            @endforeach
+        @endforeach
 
         </tbody>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 $(document).ready(function() {
     $("#tambahPekerjaanBtn").click(function() {
-        $("#popup").show();
+        // Bersihkan isian modal
+        $("#Judul_Pengadaan").val("");
+        $("#checklist-nota-dinas").prop("checked", false);
+        $("#checklist-rab").prop("checked", false);
+        $("#checklist-justifikasi").prop("checked", false);
+
+        // Ubah teks tombol "Simpan Perubahan" kembali ke "Tambah"
+        $("#tambahBtn").text("Tambah");
+
+        // Tampilkan modal
+        $("#formModal").modal("show");
     });
 
-    $("#close-popup").click(function() {
-        $("#popup").hide();
+    $("#closeModalBtnForm").click(function() {
+        $("#formModal").modal("hide");
+        });
+
+    $(".edit-button").click(function() {
+        var pengadaanID = $(this).data('id');
+        var modalID = "#editModal" + pengadaanID;
+
+        // Tampilkan modal edit yang sesuai
+        $(modalID).modal("show");
     });
+
+    $(".closeModalBtnEdit").click(function() {
+    // Ini akan menutup modal yang sedang aktif
+    $(this).closest(".modal").modal("hide");
+});
+
 });
 
 </script>

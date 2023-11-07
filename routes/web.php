@@ -73,7 +73,10 @@ Route::middleware(['auth', 'role:1,2,3,4'])->group(function () {
     Route::get('/pengadaan/create', [PengadaanController::class, 'create'])->name('pengadaan.create');
     Route::post('/pengadaan', [PengadaanController::class, 'store'])->name('pengadaan.store');
     Route::get('/status_pengadaan', [PengadaanController::class, 'status'])->name('pengadaan.status');
-    Route::get('/status_pengadaan/{id}', [PengadaanController::class, 'detail'])->name('pengadaan.detail');
+    Route::get('/status_pengadaan/{ID_Pengadaan}', [PengadaanController::class, 'detail'])->name('pengadaan.detail');
+    Route::get('/pengadaan/{ID_Pengadaan}/edit', [PengadaanController::class, 'edit'])->name('pengadaan.edit');
+    Route::put('/pengadaan/{ID_Pengadaan}', [PengadaanController::class, 'update'])->name('pengadaan.update');
+    Route::delete('/pengadaan/{ID_Pengadaan}', [PengadaanController::class, 'delete'])->name('pengadaan.delete');
 
     // Route::get('/rab_pengajuan', [RabPengajuanController::class, 'index'])->name('rab_pengajuan.index');
     // Route::get('/rab_pengajuan/create', [RabPengajuanController::class, 'create'])->name('rab_pengajuan.create');

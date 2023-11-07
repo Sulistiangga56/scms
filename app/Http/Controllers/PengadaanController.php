@@ -22,19 +22,13 @@ class PengadaanController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'No_Pengadaan' => 'required|max:255',
-            'Judul_Pengadaan' => 'required|max:255',
-            'Ringkasan_Pekerjaan' => 'required',
+            'No_Pengadaan' ,
+            'Judul_Pengadaan' => 'required',
+            'Ringkasan_Pekerjaan',
             'ID_Metode_Pengadaan',
             'ID_Sistem_Evaluasi_Penawaran',
             'ID_Jenis_Pengadaan',
         ]);
-
-        // Pengadaan::create([
-        //     'No_Pengadaan' => $request->input('No_Pengadaan'),
-        //     'Judul_Pengadaan' => $request->input('Judul_Pengadaan'),
-        //     'Ringkasan_Pekerjaan' => $request->input('Ringkasan_Pekerjaan'),
-        // ]);
 
         Pengadaan::create($validatedData);
 
@@ -60,20 +54,64 @@ class PengadaanController extends Controller
         $query->where('id_user', auth()->user()->id_user);
 
         $query = Pengadaan::query();
-        $pengadaanScm = $query->get();
+        $pengadaan = $query->get();
         $id_user = auth()->user()->id_user;
-        $pengadaanScm->id_user = $id_user;
-        $pengadaanScmUser = Pengadaan::where('id_user', $id_user)->get();
+        $pengadaan->id_user = $id_user;
+        $pengadaanUser = Pengadaan::where('id_user', $id_user)->get();
 
 
-        return view('pengadaan_scm.status', compact('pengadaanScm', 'selectedStatus', 'pengadaanScmUser', 'searchKeyword'));
+        return view('pengadaan.status', compact('pengadaan', 'selectedStatus', 'pengadaanUser', 'searchKeyword'));
     }
-    public function detail($id)
+    public function detail($ID_Pengadaan)
     {
-        $pengadaanScm = Pengadaan::findOrFail($id);
+        $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
 
-        return view('pengadaan_scm.detail', compact('pengadaanScm'));
+        return view('pengadaan.detail', compact('pengadaan'));
     }
+
+    public function edit($ID_Pengadaan)
+    {
+        $pengadaan = Pengadaan::find($ID_Pengadaan);
+
+        return view('pengadaan.edit', compact('pengadaan'));
+    }
+
+    public function update(Request $request, $ID_Pengadaan)
+{
+    $validatedData = $request->validate([
+        'Judul_Pengadaan' => 'required',
+        'checklist_nota_dinas',
+        'checklist_rab',
+        'checklist_justifikasi',
+    ]);
+
+    $pengadaan = Pengadaan::find($ID_Pengadaan);
+
+    $pengadaan->Judul_Pengadaan = $validatedData['Judul_Pengadaan'];
+    // $pengadaan->checklist_nota_dinas = $validatedData['checklist_nota_dinas'];
+    // $pengadaan->checklist_rab = $validatedData['checklist_rab'];
+    // $pengadaan->checklist_justifikasi = $validatedData['checklist_justifikasi'];
+
+    $pengadaan->save();
+
+    return redirect()->route('pengadaan.index', compact('pengadaan'))->with('success', 'Data pengadaan berhasil diperbarui');
+}
+
+
+public function delete($ID_Pengadaan)
+{
+
+    $pengadaan = Pengadaan::find($ID_Pengadaan);
+
+    if (!$pengadaan) {
+        return redirect()->route('pengadaan.index', compact('pengadaan'))->with('error', 'Data pengadaan tidak ditemukan');
+    }
+
+    $pengadaan->delete();
+
+    return redirect()->route('pengadaan.index',  compact('pengadaan'))->with('success', 'Data pengadaan berhasil dihapus');
+}
+
 
     public function generatePDF(Request $request)
     {
