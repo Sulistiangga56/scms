@@ -176,7 +176,7 @@
       <ul class="nav">
         <li class="nav-item">
           @if (Auth::user()->id_role === 1)
-          <a class="nav-link" href="/admin/users">
+          <a class="nav-link" href="/">
           @else
           <a class="nav-link" href="/">
           @endif
@@ -209,6 +209,7 @@
           </a>
           <div class="collapse" id="pengadaanSubMenu">
             <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/rab">RAB</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
@@ -242,6 +243,7 @@
           </a>
           <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
@@ -257,6 +259,7 @@
           </a>
           <div class="collapse" id="cashAdvanceSubMenu">
             <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
@@ -274,6 +277,7 @@
           </a>
           <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
@@ -289,6 +293,7 @@
           </a>
           <div class="collapse" id="cashAdvanceSubMenu">
             <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
@@ -306,6 +311,7 @@
           </a>
           <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>
@@ -321,6 +327,7 @@
           </a>
           <div class="collapse" id="cashAdvanceSubMenu">
             <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link" href="/pengadaan">Pengadaan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/pengadaan_scm">Pengajuan</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status_pengadaan_scm">Status</a></li>
               <li class="nav-item"> <a class="nav-link" href="/status-pengadaan">History</a></li>

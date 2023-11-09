@@ -21,16 +21,16 @@ class Pengadaan extends Model
 
     public function metodePengadaan()
     {
-        return $this->belongsTo(MetodePengadaan::class, 'ID_Metode_Pengadaan', 'ID_Metode_Pengadaan');
+        return $this->belongsTo(MetodePengadaan::class, 'ID_Metode_Pengadaan');
     }
 
     public function sistemEvaluasiPenawaran()
     {
-        return $this->belongsTo(SistemEvaluasiPenawaran::class, 'ID_Sistem_Evaluasi_Penawaran', 'ID_Sistem_Evaluasi_Penawaran');
+        return $this->belongsTo(SistemEvaluasiPenawaran::class, 'ID_Sistem_Evaluasi_Penawaran');
     }
 
     public function jenisPengadaan()
     {
-        return $this->belongsTo(JenisPengadaan::class, 'ID_Jenis_Pengadaan', 'ID_Jenis_Pengadaan');
+        return $this->belongsTo(JenisPengadaan::class, 'ID_Jenis_Pengadaan');
     }
 }
