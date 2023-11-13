@@ -80,6 +80,10 @@ Route::middleware(['auth', 'role:1,2,3,4'])->group(function () {
     Route::put('/pengadaan/{ID_Pengadaan}', [PengadaanController::class, 'update'])->name('pengadaan.update');
     Route::delete('/pengadaan/{ID_Pengadaan}', [PengadaanController::class, 'delete'])->name('pengadaan.delete');
 
+    // Route::get('/detail-form/{ID_Pengadaan}/{jenisForm}', 'PengadaanController@detailForm')->name('detail-form');
+    // Route::get('/pengadaan/detail/{ID_Pengadaan}/{selectedDokumen}', 'PengadaanController@showDetail')->name('pengadaan.showDetail');
+
+
     //RAB
     Route::get('/rab', [RabController::class, 'index'])->name('rab.index');
     Route::get('/rab/create', [RabController::class, 'create'])->name('rab.create');

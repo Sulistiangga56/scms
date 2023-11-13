@@ -16,7 +16,8 @@ class Pengadaan extends Model
         'Ringkasan_Pekerjaan',
         'ID_Metode_Pengadaan',
         'ID_Sistem_Evaluasi_Penawaran',
-        'ID_Jenis_Pengadaan'
+        'ID_Jenis_Pengadaan',
+        'status',
     ];
 
     public function metodePengadaan()
@@ -32,5 +33,25 @@ class Pengadaan extends Model
     public function jenisPengadaan()
     {
         return $this->belongsTo(JenisPengadaan::class, 'ID_Jenis_Pengadaan');
+    }
+
+    public function rab()
+    {
+        return $this->hasOne(Rab::class);
+    }
+
+    public function justifikasiPenunjukanLangsung()
+    {
+        return $this->hasOne(JustifikasiPenunjukanLangsung::class);
+    }
+
+    public function rencanaNotaDinas()
+    {
+        return $this->hasOne(RencanaNotaDinas::class);
+    }
+
+    public function pelaksanaanNotaDinas()
+    {
+        return $this->hasOne(PelaksanaanNotaDinas::class);
     }
 }

@@ -15,6 +15,7 @@ class Rab extends Model
         'Tanggal',
         'ID_Barang',
         'ID_Transaksi',
+        'pengadaan_ID_Pengadaan',
     ];
 
     public function kota()
@@ -30,4 +31,9 @@ class Rab extends Model
     {
         return $this->belongsTo(Transaksi::class, 'ID_Transaksi');
     }
+
+    public function pengadaan()
+{
+    return $this->belongsTo(Pengadaan::class, 'ID_Pengadaan');
+}
 }

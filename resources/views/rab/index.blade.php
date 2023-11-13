@@ -14,7 +14,7 @@
                 <!-- Formulir untuk pengajuan barang -->
                 <div class="form-group">
                     <label for="kode_barang">Kode Barang: 1234</label>
-                    <input type="text" name="kode_barang" id="kode_barang" class="form-control" required style="display: none;">
+                    <input type="text" name="kode_barang" id="kode_barang" class="form-control" required >
                 </div>
 
                 <div class="form-group">
@@ -47,11 +47,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="total">Total (Rp):</label>
-                    <input type="number" name="total" id="total" class="form-control" required>
-                </div>
-
-                <div class="form-group">
                     <label for="estimasi_jumlah">Estimasi Jumlah:</label>
                     <input type="number" name="estimasi_jumlah" id="estimasi_jumlah" class="form-control" required>
                 </div>
@@ -62,12 +57,18 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="total">Total (Rp):</label>
+                    <input type="number" name="total" id="total" class="form-control" disabled>
+                </div>
+
+                <div class="form-group">
                     <label for="keterangan">Keterangan:</label>
                     <textarea name="keterangan" id="keterangan" class="form-control"></textarea>
                 </div>
-            </form>
-            <button id="tambahBarangBtn" type="button" class="btn btn-secondary">+ Tambah Barang</button>
+                <button id="tambahBarangBtn" type="button" class="btn btn-secondary">+ Tambah Barang</button>
             <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            
         </div>
     </div>
 </div>
@@ -79,42 +80,57 @@
         $('.ckeditor').ckeditor();
     });
 
+    $(document).on("click", "#tambahBarangBtn", function () {
+        addNewForm();
+    });
+
+    $(document).on("click", ".hapusBarangBtn", function () {
+        $(this).closest(".barang-form").remove();
+    });
+
+    $(document).on("input", "#estimasi_jumlah, #harga", function () {
+        calculateTotal();
+    });
+
     function addNewForm() {
-            // Dapatkan form terakhir
-            var lastForm = $(".barang-form:last");
+        // Dapatkan form terakhir
+        var lastForm = $(".barang-form:last");
 
-            // Clone form terakhir
-            var newForm = lastForm.clone();
+        // Clone form terakhir
+        var newForm = lastForm.clone();
 
-            // Bersihkan nilai input pada form baru
-            newForm.find('input, textarea').val('');
+        // Bersihkan nilai input pada form baru
+        newForm.find('input, textarea').val('');
 
-            lastForm.before('<hr class="form-separator">');
+        var newFormId = new Date().getTime(); // ID unik berdasarkan timestamp
+        newForm.attr('id', 'barang-form-' + newFormId);
 
-            // Masukkan form baru setelah form terakhir
-            lastForm.after(newForm);
-        }
+        // Hapus tombol tambah pada form terakhir
+        lastForm.find("#tambahBarangBtn").remove();
 
-        // Tambahkan event listener untuk tombol Tambah Barang
-        $("#tambahBarangBtn").on("click", function (e) {
-            e.preventDefault();
-            addNewForm();
-        });
+        // Masukkan form baru setelah form terakhir
+        // lastForm.after('<hr class="form-separator">');
+        lastForm.after(newForm);
+
+        // Tambahkan tombol hapus pada form terakhir
+        lastForm.append('<button type="button" class="btn btn-danger hapusBarangBtn form-group">Hapus Barang</button>');
+    }
+
+    function calculateTotal() {
+        var estimasiJumlah = parseInt($("#estimasi_jumlah").val()) || 0;
+        var harga = parseInt($("#harga").val()) || 0;
+        var total = estimasiJumlah * harga;
+        $("#total").val(total);
+    }
 </script>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<style>
+{{-- <style>
     .form-separator {
         margin-top: 20px;
         margin-bottom: 20px;
         border: none;
         border-top: 1px solid #ccc;
     }
-</style>
+</style> --}}
 
 @endsection
 

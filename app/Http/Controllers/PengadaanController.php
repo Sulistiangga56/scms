@@ -28,6 +28,7 @@ class PengadaanController extends Controller
             'ID_Metode_Pengadaan',
             'ID_Sistem_Evaluasi_Penawaran',
             'ID_Jenis_Pengadaan',
+            'status' => 'in:Belum Dibuat,Sudah Dibuat',
         ]);
 
         Pengadaan::create($validatedData);
@@ -67,6 +68,7 @@ class PengadaanController extends Controller
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
 
         return view('pengadaan.detail', compact('pengadaan'));
+
     }
 
     public function edit($ID_Pengadaan)
@@ -111,6 +113,26 @@ public function delete($ID_Pengadaan)
 
     return redirect()->route('pengadaan.index',  compact('pengadaan'))->with('success', 'Data pengadaan berhasil dihapus');
 }
+
+// public function showDetail($ID_Pengadaan, $selectedDokumen)
+// {
+//     // Mengambil data pengadaan berdasarkan ID
+//     $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+
+//     // Mendefinisikan dokumen yang dicek
+//     $dokumenList = ['RAB', 'Justifikasi Penunjukan Langsung', 'Nota Dinas Permintaan Rencana Pengadaan', 'Nota Dinas Permintaan Pelaksanaan Pengadaan'];
+    
+//     // Jika dokumen yang dipilih tidak ada dalam daftar, redirect ke halaman sebelumnya
+//     if (!in_array($selectedDokumen, $dokumenList)) {
+//         return redirect()->back()->with('error', 'Dokumen tidak valid');
+//     }
+
+//     // Menyertakan dokumen yang dipilih dan daftar dokumen ke view
+//     return view('pengadaan.detail', compact('pengadaan', 'selectedDokumen', 'dokumenList'));
+// }
+
+
+
 
 
     public function generatePDF(Request $request)

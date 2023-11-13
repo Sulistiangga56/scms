@@ -163,8 +163,19 @@ $(document).ready(function() {
     $(".closeModalBtnEdit").click(function() {
     // Ini akan menutup modal yang sedang aktif
     $(this).closest(".modal").modal("hide");
-});
+    });
 
+    // $("#checklist-nota-dinas").change(function () {
+    // toggleFormVisibility("checklist-nota-dinas", "form-nota-dinas");
+    // });
+
+    // $("#checklist-rab").change(function () {
+    // toggleFormVisibility("checklist-rab", "form-rab");
+    // });
+
+    // $("#checklist-justifikasi").change(function () {
+    // toggleFormVisibility("checklist-justifikasi", "form-justifikasi");
+    // });
 });
 
 </script>
