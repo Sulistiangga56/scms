@@ -37,21 +37,26 @@ class Pengadaan extends Model
 
     public function rab()
     {
-        return $this->hasOne(Rab::class);
+        return $this->hasOne(Rab::class, 'pengadaan_ID_Pengadaan');
     }
 
     public function justifikasiPenunjukanLangsung()
     {
-        return $this->hasOne(JustifikasiPenunjukanLangsung::class);
+        return $this->hasOne(JustifikasiPenunjukanLangsung::class, 'pengadaan_ID_Pengadaan');
     }
 
     public function rencanaNotaDinas()
     {
-        return $this->hasOne(RencanaNotaDinas::class);
+        return $this->hasOne(RencanaNotaDinas::class, 'pengadaan_ID_Pengadaan');
     }
 
     public function pelaksanaanNotaDinas()
     {
-        return $this->hasOne(PelaksanaanNotaDinas::class);
+        return $this->hasOne(PelaksanaanNotaDinas::class, 'pengadaan_ID_Pengadaan');
+    }
+
+    public function pengadaanSCM()
+    {
+        return $this->hasOne(PengadaanScm::class, 'pengadaan_ID_Pengadaan');
     }
 }

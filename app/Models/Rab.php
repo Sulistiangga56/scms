@@ -33,7 +33,7 @@ class Rab extends Model
     }
 
     public function pengadaan()
-{
-    return $this->belongsTo(Pengadaan::class, 'ID_Pengadaan');
-}
+    {
+        return $this->belongsTo(Pengadaan::class, 'pengadaan_ID_Pengadaan');
+    }
 }

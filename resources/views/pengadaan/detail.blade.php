@@ -21,25 +21,35 @@
                         </thead>
                         <tbody>
                             {{-- Tambahkan foreach untuk setiap dokumen --}}
-                            @foreach(['RAB', 'Justifikasi Penunjukan Langsung', 'Nota Dinas Permintaan Rencana Pengadaan', 'Nota Dinas Permintaan Pelaksanaan Pengadaan'] as $dokumen)
-                                <tr>
-                                    <td>{{ $dokumen }}</td>
-                                    {{-- @foreach($dokumen_checked as $dokumen)
-                            <tr>
-                                <td>{{ $dokumen }}</td> --}}
-                                    {{-- Tambahkan tanggal_pengajuan berdasarkan masing-masing dokumen --}}
-                                    <td>Tanggal Pengajuan: {{ optional($pengadaan->$dokumen)->tanggal_pengajuan }}</td>
-                                    <td>
-                                        {{-- Tambahkan status berdasarkan masing-masing dokumen --}}
-                                        @if(optional($pengadaan->$dokumen)->status === 'Sudah Dibuat')
-                                            <span class="badge badge-opacity-warning">Sudah Dibuat </span>
-                                        @else
-                                            <span class="badge badge-opacity-danger">Belum Dibuat</span>
+                            @foreach(['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan','Nota Dinas Permintaan Pelaksanaan Pengadaan'] as $dokumen)
+                            {{-- {{ dd($dokumen_checked) }} --}}
+                                {{-- Tambahkan kondisi untuk menentukan apakah bagian ini perlu ditampilkan --}}
+                                @if ($dokumen_checked[$dokumen])
+                                    <tr>
+                                        <td>{{ $dokumen }}</td>
+                                        {{-- Tambahkan tanggal_pengajuan berdasarkan masing-masing dokumen --}}
+                                        <td>Tanggal Pengajuan: {{ optional($pengadaan->{'tanggal_' . strtolower(str_replace(' ', '_', $dokumen))})->tanggal_pengajuan }}</td>
+                                        <td>
+                                            {{-- Tambahkan status berdasarkan masing-masing dokumen --}}
+                                            @if(optional($pengadaan->{'tanggal_' . strtolower(str_replace(' ', '_', $dokumen))})->status === 'Sudah Dibuat')
+                                                <span class="badge badge-opacity-warning">Sudah Dibuat </span>
+                                            @else
+                                                <span class="badge badge-opacity-danger">Belum Dibuat</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                        @if ($dokumen == 'Rencana Anggaran Biaya')
+                                            <a href="{{ route('rab.index') }}" class="btn btn-info">Detail</a>
+                                        @elseif ($dokumen == 'Justifikasi Penunjukan Langsung')
+                                            <a href="{{ route('justifikasi.index') }}" class="btn btn-info">Detail</a>
+                                        @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')
+                                            <a href="{{ route('nota_dinas_permintaan.index') }}" class="btn btn-info">Detail</a>
+                                        @elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')
+                                            <a href="{{ route('nota_dinas_pelaksanaan.index') }}" class="btn btn-info">Detail</a>
                                         @endif
-                                    </td>
-                                    {{-- Tambahkan tombol detail dengan link ke form terkait --}}
-                                    <td><a href="{{ route('pengadaan.detail', [$pengadaan->ID_Pengadaan, 'dokumen' => $dokumen]) }}" class="btn btn-info">Detail</a></td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

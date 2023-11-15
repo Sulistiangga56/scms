@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JustifikasiController;
+use App\Http\Controllers\NotaDinasPermintaanPelaksanaanPengadaanController;
+use App\Http\Controllers\NotaDinasPermintaanPengadaanController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PengadaanScmController;
 use App\Http\Controllers\RabController;
@@ -80,8 +83,8 @@ Route::middleware(['auth', 'role:1,2,3,4'])->group(function () {
     Route::put('/pengadaan/{ID_Pengadaan}', [PengadaanController::class, 'update'])->name('pengadaan.update');
     Route::delete('/pengadaan/{ID_Pengadaan}', [PengadaanController::class, 'delete'])->name('pengadaan.delete');
 
-    // Route::get('/detail-form/{ID_Pengadaan}/{jenisForm}', 'PengadaanController@detailForm')->name('detail-form');
-    // Route::get('/pengadaan/detail/{ID_Pengadaan}/{selectedDokumen}', 'PengadaanController@showDetail')->name('pengadaan.showDetail');
+    // Route::get('/pengadaan/detail/{ID_Pengadaan}/{dokumen}', 'PengadaanController@detail')->name('nama_route_detail');
+
 
 
     //RAB
@@ -90,6 +93,27 @@ Route::middleware(['auth', 'role:1,2,3,4'])->group(function () {
     Route::post('/rab', [RabController::class, 'store'])->name('rab.store');
     Route::get('/status_rab', [RabController::class, 'status'])->name('rab.status');
     Route::get('/status_rab/{id}', [RabController::class, 'detail'])->name('rab.detail');
+
+    //Justifikasi Pengadaan Langsung
+    Route::get('/justifikasi', [JustifikasiController::class, 'index'])->name('justifikasi.index');
+    Route::get('/justifikasi/create', [JustifikasiController::class, 'create'])->name('justifikasi.create');
+    Route::post('/justifikasi', [JustifikasiController::class, 'store'])->name('justifikasi.store');
+    Route::get('/status_justifikasi', [JustifikasiController::class, 'status'])->name('justifikasi.status');
+    Route::get('/status_justifikasi/{id}', [JustifikasiController::class, 'detail'])->name('justifikasi.detail');
+
+    //Nota Dinas Permintaan Pengadaan
+    Route::get('/nota_dinas_permintaan', [NotaDinasPermintaanPengadaanController::class, 'index'])->name('nota_dinas_permintaan.index');
+    Route::get('/nota_dinas_permintaan/create', [NotaDinasPermintaanPengadaanController::class, 'create'])->name('nota_dinas_permintaan.create');
+    Route::post('/nota_dinas_permintaan', [NotaDinasPermintaanPengadaanController::class, 'store'])->name('nota_dinas_permintaan.store');
+    Route::get('/status_nota_dinas_permintaan', [NotaDinasPermintaanPengadaanController::class, 'status'])->name('nota_dinas_permintaan.status');
+    Route::get('/status_nota_dinas_permintaan/{id}', [NotaDinasPermintaanPengadaanController::class, 'detail'])->name('nota_dinas_permintaan.detail');
+
+    //Nota Dinas Permintaan Pelaksanaan Pengadaan
+    Route::get('/nota_dinas_pelaksanaan', [NotaDinasPermintaanPelaksanaanPengadaanController::class, 'index'])->name('nota_dinas_pelaksanaan.index');
+    Route::get('/nota_dinas_pelaksanaan/create', [NotaDinasPermintaanPelaksanaanPengadaanController::class, 'create'])->name('nota_dinas_pelaksanaan.create');
+    Route::post('/nota_dinas_pelaksanaan', [NotaDinasPermintaanPelaksanaanPengadaanController::class, 'store'])->name('nota_dinas_pelaksanaan.store');
+    Route::get('/status_nota_dinas_pelaksanaan', [NotaDinasPermintaanPelaksanaanPengadaanController::class, 'status'])->name('nota_dinas_pelaksanaan.status');
+    Route::get('/status_nota_dinas_pelaksanaan/{id}', [NotaDinasPermintaanPelaksanaanPengadaanController::class, 'detail'])->name('nota_dinas_pelaksanaan.detail');
 });
 Route::middleware(['auth', 'role:5'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Pejabat User"

@@ -11,7 +11,17 @@ class PengadaanController extends Controller
     public function index()
     {
         $pengadaan = Pengadaan::with(['metodePengadaan', 'sistemEvaluasiPenawaran', 'jenisPengadaan'])->get();
-        return view('pengadaan.index', compact('pengadaan'));
+
+        $dokumenList = ['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan','Nota Dinas Permintaan Pelaksanaan Pengadaan'];
+        $dokumen_checked = [];
+    
+        foreach ($pengadaan as $p) {
+            foreach ($dokumenList as $d) {
+                $dokumen_checked[$p->ID_Pengadaan][$d] = $p->{'checklist_' . strtolower(str_replace(' ', '_', $d))};
+            }
+        }
+
+        return view('pengadaan.index', compact('pengadaan', 'dokumen_checked'));
     }
 
     public function create()
@@ -29,9 +39,19 @@ class PengadaanController extends Controller
             'ID_Sistem_Evaluasi_Penawaran',
             'ID_Jenis_Pengadaan',
             'status' => 'in:Belum Dibuat,Sudah Dibuat',
-        ]);
+            'checklist_nota_dinas_permintaan_pengadaan',
+        'checklist_nota_dinas_permintaan_pelaksanaan_pengadaan',
+        'checklist_rencana_anggaran_biaya',
+        'checklist_justifikasi_penunjukan_langsung',
+    ]);
 
-        Pengadaan::create($validatedData);
+    $pengadaan = new Pengadaan;
+    $pengadaan->Judul_Pengadaan = $validatedData['Judul_Pengadaan'];
+    $pengadaan->checklist_nota_dinas_permintaan_pengadaan = $request->has('checklist_nota_dinas_permintaan_pengadaan') ? 1 : 0;
+    $pengadaan->checklist_nota_dinas_permintaan_pelaksanaan_pengadaan = $request->has('checklist_nota_dinas_permintaan_pelaksanaan_pengadaan') ? 1 : 0;
+    $pengadaan->checklist_rencana_anggaran_biaya = $request->has('checklist_rencana_anggaran_biaya') ? 1 : 0;
+    $pengadaan->checklist_justifikasi_penunjukan_langsung = $request->has('checklist_justifikasi_penunjukan_langsung') ? 1 : 0;
+    $pengadaan->save();
 
         return redirect()->route('pengadaan.index')->with('success', 'Data pengadaan berhasil disimpan');
     }
@@ -63,11 +83,31 @@ class PengadaanController extends Controller
 
         return view('pengadaan.status', compact('pengadaan', 'selectedStatus', 'pengadaanUser', 'searchKeyword'));
     }
-    public function detail($ID_Pengadaan)
+    public function detail($ID_Pengadaan, ...$dokumen)
     {
         $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
+        // $pengadaan = Pengadaan::with(['rab', 'justifikasiPenunjukanLangsung', 'rencanaNotaDinas', 'pelaksanaanNotaDinas'])->findOrFail($ID_Pengadaan);
 
-        return view('pengadaan.detail', compact('pengadaan'));
+
+        // \DB::enableQueryLog();
+        // // Lakukan query untuk mengambil data pengadaan dan dokumen-dokumennya
+        // $pengadaan = Pengadaan::with(['rab', 'justifikasiPenunjukanLangsung', 'rencanaNotaDinas', 'pelaksanaanNotaDinas'])->findOrFail($ID_Pengadaan);
+        // dd(\DB::getQueryLog());
+        
+
+
+        $dokumenList = ['Rencana Anggaran Biaya', 'Justifikasi Penunjukan Langsung','Nota Dinas Permintaan Pengadaan','Nota Dinas Permintaan Pelaksanaan Pengadaan'];
+        $dokumen_checked = [];
+    
+        // // Menyimpan status checkbox ke dalam array
+        foreach ($dokumenList as $d) {
+            $dokumen_checked[$d] = $pengadaan->{'checklist_' . strtolower(str_replace(' ', '_', $d))};
+        }
+    
+        // // Mengembalikan tampilan detail dengan menyertakan data pengadaan dan dokumen_checked
+        return view('pengadaan.detail', compact('pengadaan', 'dokumen_checked', 'dokumen'));
+
+        // return view('pengadaan.detail', compact('pengadaan', 'dokumen'));
 
     }
 
@@ -82,21 +122,23 @@ class PengadaanController extends Controller
 {
     $validatedData = $request->validate([
         'Judul_Pengadaan' => 'required',
-        'checklist_nota_dinas',
-        'checklist_rab',
-        'checklist_justifikasi',
+        'checklist_nota_dinas_permintaan_pengadaan',
+        'checklist_nota_dinas_permintaan_pelaksanaan_pengadaan',
+        'checklist_rencana_anggaran_biaya',
+        'checklist_justifikasi_penunjukan_langsung',
     ]);
 
     $pengadaan = Pengadaan::find($ID_Pengadaan);
 
     $pengadaan->Judul_Pengadaan = $validatedData['Judul_Pengadaan'];
-    // $pengadaan->checklist_nota_dinas = $validatedData['checklist_nota_dinas'];
-    // $pengadaan->checklist_rab = $validatedData['checklist_rab'];
-    // $pengadaan->checklist_justifikasi = $validatedData['checklist_justifikasi'];
+    $pengadaan->checklist_nota_dinas_permintaan_pengadaan = $request->has('checklist_nota_dinas_permintaan_pengadaan') ? 1 : 0;
+    $pengadaan->checklist_nota_dinas_permintaan_pelaksanaan_pengadaan = $request->has('checklist_nota_dinas_permintaan_pelaksanaan_pengadaan') ? 1 : 0;
+    $pengadaan->checklist_rencana_anggaran_biaya = $request->has('checklist_rencana_anggaran_biaya') ? 1 : 0;
+    $pengadaan->checklist_justifikasi_penunjukan_langsung = $request->has('checklist_justifikasi_penunjukan_langsung') ? 1 : 0;
 
     $pengadaan->save();
 
-    return redirect()->route('pengadaan.index', compact('pengadaan'))->with('success', 'Data pengadaan berhasil diperbarui');
+    return redirect()->route('pengadaan.index')->with('success', 'Data pengadaan berhasil diperbarui');
 }
 
 
@@ -114,25 +156,22 @@ public function delete($ID_Pengadaan)
     return redirect()->route('pengadaan.index',  compact('pengadaan'))->with('success', 'Data pengadaan berhasil dihapus');
 }
 
-// public function showDetail($ID_Pengadaan, $selectedDokumen)
+// public function showDetail($ID_Pengadaan, $dokumen)
 // {
-//     // Mengambil data pengadaan berdasarkan ID
 //     $pengadaan = Pengadaan::findOrFail($ID_Pengadaan);
 
 //     // Mendefinisikan dokumen yang dicek
 //     $dokumenList = ['RAB', 'Justifikasi Penunjukan Langsung', 'Nota Dinas Permintaan Rencana Pengadaan', 'Nota Dinas Permintaan Pelaksanaan Pengadaan'];
-    
-//     // Jika dokumen yang dipilih tidak ada dalam daftar, redirect ke halaman sebelumnya
-//     if (!in_array($selectedDokumen, $dokumenList)) {
-//         return redirect()->back()->with('error', 'Dokumen tidak valid');
+//     $dokumen_checked = [];
+
+//     // Menyimpan status checkbox ke dalam array
+//     foreach ($dokumenList as $d) {
+//         $dokumen_checked[$d] = $pengadaan->{'checklist_' . strtolower(str_replace(' ', '_', $d))};
 //     }
 
-//     // Menyertakan dokumen yang dipilih dan daftar dokumen ke view
-//     return view('pengadaan.detail', compact('pengadaan', 'selectedDokumen', 'dokumenList'));
+//     // Mengembalikan tampilan detail dengan menyertakan data pengadaan dan dokumen_checked
+//     return view('pengadaan.detail', compact('pengadaan', 'dokumen_checked', 'dokumen'));
 // }
-
-
-
 
 
     public function generatePDF(Request $request)

@@ -123,14 +123,6 @@
         $("#total").val(total);
     }
 </script>
-{{-- <style>
-    .form-separator {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        border: none;
-        border-top: 1px solid #ccc;
-    }
-</style> --}}
 
 @endsection
 
