@@ -3,7 +3,7 @@ RAB:  tabel_rencana_anggaran_biaya
             tabel_transaksi
             tabel_kota
 
-Justifikasi Penunjukan Langsung(No PRK dan kriteria JPL tidak jadi FK):
+Justifikasi Penunjukan Langsung(No PRK dan kriteria JPL tidak jadi FK):  BESOK KERJAIN JAVASCRIPT KRITERIA
 
     tabel_kota
     tabel_pengadaan

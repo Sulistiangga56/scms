@@ -41,7 +41,7 @@
                                         @if ($dokumen == 'Rencana Anggaran Biaya')
                                             <a href="{{ route('rab.index') }}" class="btn btn-info">Detail</a>
                                         @elseif ($dokumen == 'Justifikasi Penunjukan Langsung')
-                                            <a href="{{ route('justifikasi.index') }}" class="btn btn-info">Detail</a>
+                                            <a href="{{ route('justifikasi.index', ['ID_Pengadaan' => $pengadaan->ID_Pengadaan]) }}" class="btn btn-info">Detail</a>
                                         @elseif ($dokumen == 'Nota Dinas Permintaan Pengadaan')
                                             <a href="{{ route('nota_dinas_permintaan.index') }}" class="btn btn-info">Detail</a>
                                         @elseif ($dokumen == 'Nota Dinas Permintaan Pelaksanaan Pengadaan')

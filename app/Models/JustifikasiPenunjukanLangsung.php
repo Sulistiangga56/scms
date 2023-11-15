@@ -19,8 +19,22 @@ class JustifikasiPenunjukanLangsung extends Model
         'Rincian_Status_Kondisi',
         'Rincian_Alasan_Metode',
         'Rincian_Kriteria_Peserta',
-        'ID_Kriteria_JPL',
     ];
+
+    public function kota()
+    {
+        return $this->belongsTo(Kota::class, 'ID_Kota');
+    }
+
+    public function anggaran()
+    {
+        return $this->belongsTo(Anggaran::class, 'Nomor_PRK');
+    }
+
+    public function peserta()
+    {
+        return $this->belongsTo(Peserta::class, 'ID_Peserta');
+    }
 
     public function pengadaan()
     {

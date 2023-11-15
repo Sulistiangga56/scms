@@ -95,11 +95,12 @@ Route::middleware(['auth', 'role:1,2,3,4'])->group(function () {
     Route::get('/status_rab/{id}', [RabController::class, 'detail'])->name('rab.detail');
 
     //Justifikasi Pengadaan Langsung
-    Route::get('/justifikasi', [JustifikasiController::class, 'index'])->name('justifikasi.index');
+    // Route::get('/justifikasi', [JustifikasiController::class, 'index'])->name('justifikasi.index');
+    Route::get('/justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'index'])->name('justifikasi.index');
     Route::get('/justifikasi/create', [JustifikasiController::class, 'create'])->name('justifikasi.create');
     Route::post('/justifikasi', [JustifikasiController::class, 'store'])->name('justifikasi.store');
     Route::get('/status_justifikasi', [JustifikasiController::class, 'status'])->name('justifikasi.status');
-    Route::get('/status_justifikasi/{id}', [JustifikasiController::class, 'detail'])->name('justifikasi.detail');
+    Route::get('/status_justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'detail'])->name('justifikasi.detail');
 
     //Nota Dinas Permintaan Pengadaan
     Route::get('/nota_dinas_permintaan', [NotaDinasPermintaanPengadaanController::class, 'index'])->name('nota_dinas_permintaan.index');
