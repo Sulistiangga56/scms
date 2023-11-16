@@ -12,6 +12,7 @@ class Barang extends Model
 
     protected $fillable = [
         'Nama_Barang',
+        'Kode_Barang',
         'qty',
         'ID_Transaksi',
         'Deskripsi',
@@ -21,5 +22,10 @@ class Barang extends Model
     public function transaksi()
     {
         return $this->belongsTo(Transaksi::class, 'ID_Transaksi');
+    }
+
+    public function rab()
+    {
+        return $this->belongsTo(rab::class,'ID_RAB');
     }
 }

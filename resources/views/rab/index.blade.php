@@ -12,10 +12,13 @@
                 @csrf
 
                 <!-- Formulir untuk pengajuan barang -->
-                <div class="form-group">
-                    <label for="kode_barang">Kode Barang: 1234</label>
-                    <input type="text" name="kode_barang" id="kode_barang" class="form-control" required >
-                </div>
+                {{-- <div class="form-group"> --}}
+                    <div class="form-group">
+                        <label for="kode_barang">Kode Barang: {{ $newKodeBarang }}</label>
+                    </div>
+                    {{-- <label for="kode_barang">Kode Barang: </label> --}}
+                    {{-- <input type="text" name="kode_barang" id="kode_barang" class="form-control" required > --}}
+                {{-- </div> --}}
 
                 <div class="form-group">
                     <label for="kota">Kota:</label>

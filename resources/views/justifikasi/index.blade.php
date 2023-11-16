@@ -19,8 +19,9 @@
                         <div class="form-group">
                             <label for="Jenis_Pengadaan">Jenis Pengadaan</label>
                             <select name="Jenis_Pengadaan" id="Jenis_Pengadaan" class="form-control" required>
+                                <option value=""> </option>
                                 @foreach($jenisPengadaanOptions as $option)
-                                    <option value="{{ $option->id }}" {{ $jenisPengadaan && $option->id == $jenisPengadaan->id ? 'selected' : '' }}>
+                                    <option value="{{ $option->Jenis_Pengadaan }}" {{ $jenisPengadaan && $option->Jenis_Pengadaan == $jenisPengadaan->id ? 'selected' : '' }}>
                                         {{ $option->Jenis_Pengadaan }}
                                     </option>
                                 @endforeach
@@ -71,8 +72,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group"  id="kriteria_jasa" style="display: none;">
-                            <h3 for="kriteria-jasa">Kriteria</h3>
+                        <div class="form-group" for="kriteria-barang" name="kriteria-barang" id="kriteria-barang" style="display: none;">
+                            <h3>Kriteria</h3>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="checklist_1" id="checklist-1">
                                 <label class="form-check-label" for="checklist-1">Pengadaan barang, pekerjaan konstruksi, jasa lainnya yang bersifat spesifik,
@@ -153,8 +154,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group" id="kriteria_barang" style="display: none;">
-                            <h3 for="kriteria-barang">Kriteria</h3>
+                        <div class="form-group" for="kriteria-jasa" name="kriteria-jasa" id="kriteria-jasa" style="display: none;">
+                            <h3>Kriteria</h3>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="checklist_19" id="checklist-19">
                                 <label class="form-check-label" for="checklist-19">Jasa yang akan diadakan bersifat spesifik hanya dapat dilaksanakan dengan menggunakna teknologi khusus oleh pemegang Hak Atas Kekayaan Intelektual (HAKI) dan/atau hanya ada 1 (satu) penyedia jasa konsultansi yang mampu melaksanakan</label>
@@ -216,27 +217,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group" id="label_url_kak" style="display: none;">
-                            <label for="url_kak">URL KAK</label>
-                            <input type="text" name="url_kak" id="url_kak" class="form-control">
-                        </div>
-
-                        <div class="form-group" id="label_url_spesifikasi_teknis" style="display: none;">
-                            <label for="url_spesifikasi_teknis">URL Spesifikasi Teknis</label>
-                            <input type="text" name="url_spesifikasi_teknis" id="url_spesifikasi_teknis" class="form-control">
-                        </div>
-
-                        @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
-
-                    </body>
-
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js"></script>
                     <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
                     <script type="text/javascript">
                         $(document).ready(function () {
@@ -256,122 +238,31 @@ CKEDITOR.on("instanceReady", function(event) {
 	})
 });</script>
 
-{{-- Muncul Hilang Barang dan Jasa ketika diklik --}}
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Ambil elemen select jenis_pengadaan
-        const jenisPengadaanSelect = document.getElementById("Jenis_Pengadaan");
-
-        // Ambil elemen formulir URL KAK dan URL Spesifikasi Teknis
-        const kriteriaJasa = document.getElementById("kriteria_jasa");
-        const kriteriaBarang = document.getElementById("kriteria_barang");
-        // const checklistJasa = document.getElementById("checklist-jasa");
-        // const checklistBarang = document.getElementById("checklist-barang");
-
-        // Tambahkan event listener untuk perubahan pada jenis_pengadaan
-        // jenisPengadaanSelect.addEventListener("change", function() {
-        //     if (jenisPengadaanSelect.value === "Barang") {
-        //         kriteriaJasa.style.display = "none";
-        //         kriteriaBarang.style.display = "block";
-        //         // checklistJasa.style.display = "none";
-        //         // checklistBarang.style.display = "block";
-        //     } else if (jenisPengadaanSelect.value === "Jasa Kontruksi") {
-        //         kriteriaJasa.style.display = "block";
-        //         kriteriaBarang.style.display = "none";
-        //         // checklistJasa.style.display = "block";
-        //         // checklistBarang.style.display = "none";
-        //     } else if (jenisPengadaanSelect.value === "Jasa Konsultasi") {
-        //         kriteriaJasa.style.display = "block";
-        //         kriteriaBarang.style.display = "none";
-        //         // checklistJasa.style.display = "block";
-        //         // checklistBarang.style.display = "none";
-        //     } else if (jenisPengadaanSelect.value === "Jasa Lainnya") {
-        //         kriteriaJasa.style.display = "block";
-        //         kriteriaBarang.style.display = "none";
-        //         // checklistJasa.style.display = "block";
-        //         // checklistBarang.style.display = "none";
-        //     } else {
-        //         kriteriaJasa.style.display = "none";
-        //         kriteriaBarang.style.display = "none";
-        //         // checklistJasa.style.display = "none";
-        //         // checklistBarang.style.display = "none";
-        //     }
-        // });
-
-        jenisPengadaanSelect.addEventListener("change", function() {
-    console.log("Nilai jenis_pengadaan yang dipilih:", jenisPengadaanSelect.value);
-
-    if (jenisPengadaanSelect.value === "Barang") {
-        console.log("Menampilkan kriteriaBarang dan checklistBarang");
-        kriteriaJasa.style.display = "none";
-        kriteriaBarang.style.display = "block";
-        checklistJasa.style.display = "none";
-        checklistBarang.style.display = "block";
-    } else if (jenisPengadaanSelect.value === "Jasa Kontruksi") {
-        console.log("Menampilkan kriteriaJasa dan checklistJasa");
-        kriteriaJasa.style.display = "block";
-        kriteriaBarang.style.display = "none";
-        checklistJasa.style.display = "block";
-        checklistBarang.style.display = "none";
-    } else if (jenisPengadaanSelect.value === "Jasa Konsultasi") {
-        console.log("Menampilkan kriteriaJasa dan checklistJasa");
-        kriteriaJasa.style.display = "block";
-        kriteriaBarang.style.display = "none";
-        checklistJasa.style.display = "block";
-        checklistBarang.style.display = "none";
-    } else if (jenisPengadaanSelect.value === "Jasa Lainnya") {
-        console.log("Menampilkan kriteriaJasa dan checklistJasa");
-        kriteriaJasa.style.display = "block";
-        kriteriaBarang.style.display = "none";
-        checklistJasa.style.display = "block";
-        checklistBarang.style.display = "none";
-    } else {
-        console.log("Menyembunyikan semua elemen kriteria dan checklist");
-        kriteriaJasa.style.display = "none";
-        kriteriaBarang.style.display = "none";
-        checklistJasa.style.display = "none";
-        checklistBarang.style.display = "none";
-    }
-});
-
-
-    });
-</script>
-
-{{-- <script>
 document.addEventListener("DOMContentLoaded", function() {
+ 
     // Ambil elemen select jenis_pengadaan
     const jenisPengadaanSelect = document.getElementById("Jenis_Pengadaan");
 
     // Ambil elemen formulir URL KAK dan URL Spesifikasi Teknis
     const kriteriaJasa = document.getElementById("kriteria-jasa");
     const kriteriaBarang = document.getElementById("kriteria-barang");
-    // const checklistJasa = document.getElementById("checklist-jasa");
-    // const checklistBarang = document.getElementById("checklist-barang");
 
     // Tambahkan event listener untuk perubahan pada jenis_pengadaan
     jenisPengadaanSelect.addEventListener("change", function() {
-        // Sembunyikan semua elemen terlebih dahulu
+
         kriteriaJasa.style.display = "none";
         kriteriaBarang.style.display = "none";
-        // checklistJasa.style.display = "none";
-        // checklistBarang.style.display = "none";
 
         // Tampilkan elemen yang sesuai dengan jenis_pengadaan
-        if (jenisPengadaanSelect.value === "Barang") {
-            kriteriaBarang.style.display = "block";
-            // checklistBarang.style.display = "block";
-        } else if (jenisPengadaanSelect.value === "Jasa Kontruksi" || jenisPengadaanSelect.value === "Jasa Konsultasi" || jenisPengadaanSelect.value === "Jasa Lainnya") {
+        if (jenisPengadaanSelect.value === "Jasa Konsultasi") {
             kriteriaJasa.style.display = "block";
-            // checklistJasa.style.display = "block";
+        } else if (jenisPengadaanSelect.value === "Jasa Konstruksi" || jenisPengadaanSelect.value === "Barang" || jenisPengadaanSelect.value === "Jasa Lainnya" || jenisPengadaanSelect.value === "Pengadaan Khusus") {
+            kriteriaBarang.style.display = "block";
         }
-        // Anda dapat menambahkan logika lain jika diperlukan
     });
 });
-
-</script> --}}
-
-
+</script>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -380,7 +271,6 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
     </div>
 </div>
-
 
 @endsection
 

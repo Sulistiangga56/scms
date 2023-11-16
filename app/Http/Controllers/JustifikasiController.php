@@ -35,7 +35,7 @@ class JustifikasiController extends Controller
     {
         $validatedData = $request->validate([
             'Nama_Pekerjaan',
-            'Jenis_Pengadaan' => 'in:Barang,Jasa Kontruksi,Jasa Konsultasi,Jasa Lainnya, Pengadaan Khusus',
+            // 'Jenis_Pengadaan' => 'in:Barang,Jasa Kontruksi,Jasa Konsultasi,Jasa Lainnya, Pengadaan Khusus',
             'Peserta_Penunjukan_Langsung',
             'Pagu_Anggaran' => 'required|numeric',
             'Rincian_Status_Kondisi',

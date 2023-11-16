@@ -85,17 +85,14 @@ Route::middleware(['auth', 'role:1,2,3,4'])->group(function () {
 
     // Route::get('/pengadaan/detail/{ID_Pengadaan}/{dokumen}', 'PengadaanController@detail')->name('nama_route_detail');
 
-
-
     //RAB
-    Route::get('/rab', [RabController::class, 'index'])->name('rab.index');
+    Route::get('/rab/{ID_Pengadaan}', [RabController::class, 'index'])->name('rab.index');
     Route::get('/rab/create', [RabController::class, 'create'])->name('rab.create');
     Route::post('/rab', [RabController::class, 'store'])->name('rab.store');
     Route::get('/status_rab', [RabController::class, 'status'])->name('rab.status');
     Route::get('/status_rab/{id}', [RabController::class, 'detail'])->name('rab.detail');
 
     //Justifikasi Pengadaan Langsung
-    // Route::get('/justifikasi', [JustifikasiController::class, 'index'])->name('justifikasi.index');
     Route::get('/justifikasi/{ID_Pengadaan}', [JustifikasiController::class, 'index'])->name('justifikasi.index');
     Route::get('/justifikasi/create', [JustifikasiController::class, 'create'])->name('justifikasi.create');
     Route::post('/justifikasi', [JustifikasiController::class, 'store'])->name('justifikasi.store');

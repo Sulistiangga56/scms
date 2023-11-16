@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use App\Models\Rab;
 use Illuminate\Http\Request;
 
 class RabController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $rabData = Rab::all();
-        return view('rab.index', compact('rabData'));
+        $newKodeBarang = $this->generateKodeBarang();
+        return view('rab.index', compact('rabData','newKodeBarang'));
     }
     public function create()
     {
@@ -67,4 +69,20 @@ class RabController extends Controller
 
         return view('rab.detail', compact('rabData'));
     }
+
+    public function generateKodeBarang()
+{
+    $latestBarang = Barang::latest()->first(); // Ambil barang terakhir
+    $newKodeBarang = 'B0001'; // Default jika belum ada barang
+    
+    if ($latestBarang) {
+        // Jika ada barang sebelumnya, generate kode berikutnya
+        $lastKodeNumber = intval(substr($latestBarang->Kode_Barang, 1)); // Ambil angka dari kode terakhir
+        $newKodeNumber = $lastKodeNumber + 1;
+        $newKodeBarang = 'B' . sprintf('%04d', $newKodeNumber);
+    }
+
+    return $newKodeBarang;
+}
+
 }
