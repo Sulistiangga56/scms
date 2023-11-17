@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Kota;
 use App\Models\Rab;
 use Illuminate\Http\Request;
 
 class RabController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $Kota)
     {
         $rabData = Rab::all();
         $newKodeBarang = $this->generateKodeBarang();
-        return view('rab.index', compact('rabData','newKodeBarang'));
+        $kota = !empty($Kota) ? Kota::find($Kota[1]) : null;
+        $kotaOptions = Kota::all();
+        return view('rab.index', compact('rabData','newKodeBarang', 'kota', 'kotaOptions'));
     }
     public function create()
     {
@@ -32,6 +35,22 @@ class RabController extends Controller
         ]);
 
         Rab::create($validatedData);
+
+        $rab = new Rab();
+    $rab->ID_Kota = $request->input('kota');
+    $rab->Tanggal = $request->input('tanggal');
+    // Lanjutkan untuk kolom-kolom lainnya
+    $rab->save();
+
+    // Simpan barang-barang terkait
+    foreach ($request->input('barang') as $barangData) {
+        $barang = new Barang();
+        $barang->ID_RAB = $rab->ID_RAB;
+        $barang->Estimasi_Jumlah = $barangData['estimasi_jumlah'];
+        $barang->Harga = $barangData['harga'];
+        // Lanjutkan untuk kolom-kolom lainnya
+        $barang->save();
+    }
 
         return redirect()->route('rab.index')->with('success', 'Data Barang berhasil disimpan');
     }
