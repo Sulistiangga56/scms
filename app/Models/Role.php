@@ -14,4 +14,9 @@ class Role extends Model
         'nama_role',
         'keterangan_role',
     ];
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class, 'id_role', 'id_role');
+    }
 }

@@ -11,6 +11,8 @@ use App\Http\Controllers\RabController;
 use App\Http\Controllers\RabPengajuanController;
 use App\Http\Controllers\TamuController;
 use App\Http\Controllers\TuanRumahController;
+use App\Http\Controllers\VendorController;
+use App\Http\Controllers\VendorLoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +30,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+Route::get('/vendor', [VendorController::class, 'index'])->name('vendor');
 // Route::get('/pengajuan-tamu', [TamuController::class, 'createForm'])->name('tamu.create');
 
 
@@ -35,9 +38,15 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middl
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/login/vendor', [VendorLoginController::class, 'showLoginVendorForm'])->name('loginvendor');
+Route::post('/login/vendor', [VendorLoginController::class, 'loginVendor']);
+
 // Rute untuk registrasi
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('registerform');
 Route::post('/store', [AuthController::class, 'store'])->name('store');
+
+Route::get('/register/vendor', [VendorLoginController::class, 'showRegistrationVendorForm'])->name('registervendorform');
+Route::post('/store/vendor', [VendorLoginController::class, 'storeVendor'])->name('store-vendor');
 
 // Route::middleware(['auth', 'role:1'])->group(function () {
 //     // Rute yang akan dilindungi oleh middleware role "administrator"
@@ -64,7 +73,7 @@ Route::post('/store', [AuthController::class, 'store'])->name('store');
 //     Route::get('/status_pengadaan_scm/{id}', [PengadaanScmController::class, 'detail'])->name('pengadaan_scm.detail');
 // });
 
-Route::middleware(['auth', 'role:1,2,3,4'])->group(function () {
+Route::middleware(['auth', 'role:1,2,3,4,'])->group(function () {
     // Rute yang akan dilindungi oleh middleware role "Admin Lakdan"
     //Nota Dinas
     Route::get('/pengadaan_scm', [PengadaanScmController::class, 'index'])->name('pengadaan_scm.index');
@@ -126,6 +135,11 @@ Route::middleware(['auth', 'role:7'])->group(function () {
 
 });
 
+Route::middleware(['auth', 'role:8'])->group(function () {
+    // Rute yang akan dilindungi oleh middleware role "Pejabat Lakdan"
+    // Route::get('/vendor', [VendorController::class, 'index'])->name('vendor');
+});
+
 // Route::get('/unauthorized', function () {
 //     return 'Akses Ditolak!'; // Tampilkan pesan akses ditolak
 // })->name('unauthorized');
@@ -133,5 +147,8 @@ Route::middleware(['auth', 'role:7'])->group(function () {
 
 // Rute untuk logout
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout/vendor', [VendorLoginController::class, 'logout'])->name('logoutvendor');
 Route::get('/auth/redirect', [AuthController::class, 'redirectToProvider']);
+Route::get('/auth/redirect', [VendorLoginController::class, 'redirectToProvider']);
 Route::get('/google/callback', [AuthController::class, 'handleProviderCallback']);
+Route::get('/google/callback', [VendorLoginController::class, 'handleProviderCallback']);

@@ -32,10 +32,16 @@ class PengadaanScm extends Model
         'status',
         'alasan',
         'pengadaan_ID_Pengadaan',
+        'ID_Vendor',
     ];
 
     public function pengadaan()
     {
         return $this->belongsTo(Pengadaan::class, 'ID_Pengadaan');
+    }
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class, 'ID_Vendor');
     }
 }
